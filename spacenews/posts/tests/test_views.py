@@ -7,6 +7,7 @@ from rest_framework.test import APIClient
 
 from mixer.backend.django import mixer
 
+from comments.models import Comment
 from posts.models import Post
 
 
@@ -66,6 +67,29 @@ def test_retrieve_post(client):
     data = json.loads(response.content)
     assert data['title'] == post.title
     assert data['author']['username'] == post.author.username
+
+
+@pytest.mark.django_db
+def test_add_comment(client):
+
+    post = mixer.blend(Post)
+    user = mixer.blend(User)
+
+    client.login(username=user.username, password='test')
+
+    data = {'content': 'testing'}
+
+    response = client.post(
+        f'/api/posts/{post.id}/add_comment/',
+        data,
+        format='json',
+    )
+    assert response.status_code == 201
+
+    comment = Comment.objects.first()
+    assert comment.author == user
+    assert comment.post == post
+    assert comment.content == 'testing'
 
 
 @pytest.mark.django_db
