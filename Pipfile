@@ -17,6 +17,7 @@ django-configurations = "*"
 dj-database-url = "*"
 "psycopg2" = "*"
 djangorestframework = "*"
+djoser = "*"
 
 
 [requires]

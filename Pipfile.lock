@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3f24fb86a87e8b7cf1adaa919de3f3483d371b8e3d95a6db9c4ec2957baf1eb4"
+            "sha256": "dd649d761575a0799ff91f9d0e6d706a7339c99a6591d532cf2db4e01e31de92"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -50,12 +50,26 @@
             ],
             "version": "==2.0"
         },
+        "django-templated-mail": {
+            "hashes": [
+                "sha256:f7127e1e31d7cad4e6c4b4801d25814d4b8782627ead76f4a75b3b7650687556",
+                "sha256:8db807effebb42a532622e2d142dfd453dafcd0d7794c4c3332acb90656315f9"
+            ],
+            "version": "==1.1.1"
+        },
         "djangorestframework": {
             "hashes": [
                 "sha256:1f6baf40ed456ed2af6bd1a4ff8bbc3503cebea16509993aea2b7085bc097766",
                 "sha256:9f9e94e8d22b100ed3a43cee8c47a7ff7b185e778a1f2da9ec5c73fc4e081b87"
             ],
             "version": "==3.7.7"
+        },
+        "djoser": {
+            "hashes": [
+                "sha256:5348b153d887dfea86e0ecafce1c63588705e8e74d907ba5b1d54ab94bf85ab1",
+                "sha256:9b5cfccfbe3a515e3c7a76dc0179d1b5dc9d153543def6409405bab2a660b06f"
+            ],
+            "version": "==1.1.5"
         },
         "psycopg2": {
             "hashes": [

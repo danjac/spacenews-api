@@ -22,6 +22,8 @@ class Base(Configuration):
         'django.contrib.messages',
         'django.contrib.staticfiles',
         'rest_framework',
+        'rest_framework.authtoken',
+        'djoser',
         'accounts',
         'posts',
         'comments',
@@ -80,6 +82,8 @@ class Base(Configuration):
         },
     ]
 
+    AUTH_USER_MODEL = 'accounts.User'
+
     # Internationalization
 
     LANGUAGE_CODE = 'en-us'
@@ -92,7 +96,15 @@ class Base(Configuration):
 
     STATIC_URL = '/static/'
 
-    AUTH_USER_MODEL = 'accounts.User'
+    # REST
+
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            'rest_framework.authentication.BasicAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
+            'rest_framework.authentication.TokenAuthentication',
+        )
+    }
 
 
 class Development(Base):
