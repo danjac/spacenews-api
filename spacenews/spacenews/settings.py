@@ -16,6 +16,7 @@ from configurations import Configuration, values
 
 
 class Base(Configuration):
+
     DEBUG = values.BooleanValue(False)
     SECRET_KEY = values.SecretValue()
 
