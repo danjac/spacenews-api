@@ -1,3 +1,12 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from .models import Comment
+from .permissions import CommentPermission
+from .serializers import CommentSerializer
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+
+    queryset = Comment.objects.select_related('author')
+    serializer_class = CommentSerializer
+    permission_classes = (CommentPermission, )
