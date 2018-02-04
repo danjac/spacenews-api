@@ -7,7 +7,7 @@ from .serializers import PostSerializer
 
 class PostViewSet(viewsets.ModelViewSet):
 
-    queryset = Post.objects.select_related('author')
+    queryset = Post.objects.select_related('author').order_by('-created')
     serializer_class = PostSerializer
     permission_classes = (PostPermission, )
 

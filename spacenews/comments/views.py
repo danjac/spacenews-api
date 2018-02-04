@@ -7,6 +7,6 @@ from .serializers import CommentSerializer
 
 class CommentViewSet(viewsets.ModelViewSet):
 
-    queryset = Comment.objects.select_related('author')
+    queryset = Comment.objects.select_related('author').order_by('-created')
     serializer_class = CommentSerializer
     permission_classes = (CommentPermission, )

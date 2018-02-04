@@ -33,7 +33,7 @@ def test_list_comments(client):
     assert response.status_code == 200
 
     data = json.loads(response.content)
-    assert len(data) == 3
+    assert data['count'] == 3
 
 
 @pytest.mark.django_db
