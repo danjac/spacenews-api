@@ -14,9 +14,13 @@ from posts.permissions import PostPermission
 User = get_user_model()
 
 
-def test_get_all_if_anonymous():
+@pytest.fixture
+def req():
+    return HttpRequest()
 
-    req = HttpRequest()
+
+def test_get_all_if_anonymous(req):
+
     req.method = 'GET'
     req.user = AnonymousUser()
 
@@ -24,9 +28,8 @@ def test_get_all_if_anonymous():
     assert perm.has_permission(req, mock.Mock())
 
 
-def test_get_all_if_authenticated():
+def test_get_all_if_authenticated(req):
 
-    req = HttpRequest()
     req.method = 'GET'
     req.user = User()
 
@@ -34,9 +37,8 @@ def test_get_all_if_authenticated():
     assert perm.has_permission(req, mock.Mock())
 
 
-def test_post_if_anonymous():
+def test_post_if_anonymous(req):
 
-    req = HttpRequest()
     req.method = 'POST'
     req.user = AnonymousUser()
 
@@ -44,9 +46,8 @@ def test_post_if_anonymous():
     assert not perm.has_permission(req, mock.Mock())
 
 
-def test_post_if_authenticated():
+def test_post_if_authenticated(req):
 
-    req = HttpRequest()
     req.method = 'POST'
     req.user = User()
 
@@ -54,9 +55,8 @@ def test_post_if_authenticated():
     assert perm.has_permission(req, mock.Mock())
 
 
-def test_get_instance_if_anonymous():
+def test_get_instance_if_anonymous(req):
 
-    req = HttpRequest()
     req.method = 'GET'
     req.user = AnonymousUser()
 
@@ -64,9 +64,8 @@ def test_get_instance_if_anonymous():
     assert perm.has_object_permission(req, mock.Mock(), Post())
 
 
-def test_get_instance_if_authenticated():
+def test_get_instance_if_authenticated(req):
 
-    req = HttpRequest()
     req.method = 'GET'
     req.user = User()
 
@@ -74,9 +73,8 @@ def test_get_instance_if_authenticated():
     assert perm.has_object_permission(req, mock.Mock(), Post())
 
 
-def test_put_instance_if_anonymous():
+def test_put_instance_if_anonymous(req):
 
-    req = HttpRequest()
     req.method = 'PUT'
     req.user = AnonymousUser()
 
@@ -85,9 +83,8 @@ def test_put_instance_if_anonymous():
 
 
 @pytest.mark.django_db
-def test_put_instance_if_authenticated_not_author():
+def test_put_instance_if_authenticated_not_author(req):
 
-    req = HttpRequest()
     req.method = 'PUT'
     req.user = User()
 
@@ -98,21 +95,19 @@ def test_put_instance_if_authenticated_not_author():
 
 
 @pytest.mark.django_db
-def test_put_instance_if_authenticated_is_author():
-
-    req = HttpRequest()
-    req.method = 'PUT'
+def test_put_instance_if_authenticated_is_author(req):
 
     post = mixer.blend(Post)
+
+    req.method = 'PUT'
     req.user = post.author
 
     perm = PostPermission()
     assert perm.has_object_permission(req, mock.Mock(), post)
 
 
-def test_delete_instance_if_anonymous():
+def test_delete_instance_if_anonymous(req):
 
-    req = HttpRequest()
     req.method = 'DELETE'
     req.user = AnonymousUser()
 
@@ -121,9 +116,8 @@ def test_delete_instance_if_anonymous():
 
 
 @pytest.mark.django_db
-def test_delete_instance_if_authenticated_not_author():
+def test_delete_instance_if_authenticated_not_author(req):
 
-    req = HttpRequest()
     req.method = 'DELETE'
     req.user = User()
 
@@ -134,12 +128,11 @@ def test_delete_instance_if_authenticated_not_author():
 
 
 @pytest.mark.django_db
-def test_delete_instance_if_authenticated_is_author():
-
-    req = HttpRequest()
-    req.method = 'DELETE'
+def test_delete_instance_if_authenticated_is_author(req):
 
     post = mixer.blend(Post)
+
+    req.method = 'DELETE'
     req.user = post.author
 
     perm = PostPermission()
