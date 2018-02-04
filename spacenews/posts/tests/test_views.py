@@ -70,6 +70,18 @@ def test_retrieve_post(client):
 
 
 @pytest.mark.django_db
+def test_comments(client):
+
+    post = mixer.blend(Post)
+    mixer.cycle(5).blend(Comment, post=post)
+    response = client.get(f'/api/posts/{post.id}/comments/')
+    assert response.status_code == 200
+
+    data = json.loads(response.content)
+    assert data['count'] == 5
+
+
+@pytest.mark.django_db
 def test_add_comment(client):
 
     post = mixer.blend(Post)

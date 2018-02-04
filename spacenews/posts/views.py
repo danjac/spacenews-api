@@ -18,6 +18,21 @@ class PostViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+    @detail_route(methods=['get'])
+    def comments(self, request, pk=None):
+        post = self.get_object()
+        queryset = (
+            post.comment_set.
+            select_related('author').
+            order_by('-created')
+        )
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = CommentSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = CommentSerializer(queryset, many=True)
+        return Response(serializer.data)
+
     @detail_route(
         methods=['post'],
         permission_classes=[permissions.IsAuthenticated],
