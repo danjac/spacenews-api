@@ -113,3 +113,7 @@ class Development(Base):
 
 class Production(Base):
     pass
+
+
+class Testing(Base):
+    pass
