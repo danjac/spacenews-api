@@ -25,7 +25,7 @@ def client():
 
 
 @pytest.mark.django_db
-def test_get_posts(client):
+def test_list_posts(client):
 
     mixer.cycle(5).blend(Post)
 
@@ -37,7 +37,7 @@ def test_get_posts(client):
 
 
 @pytest.mark.django_db
-def test_get_post(client):
+def test_retrieve_post(client):
 
     post = mixer.blend(Post)
     response = client.get(f'/api/posts/{post.id}/')
