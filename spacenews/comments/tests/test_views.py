@@ -37,7 +37,7 @@ def test_list_comments(client):
 
 
 @pytest.mark.django_db
-def test_retrieve_comments(client):
+def test_retrieve_comment(client):
 
     comment = mixer.blend(Comment)
     response = client.get(f'/api/comments/{comment.id}/')
@@ -46,6 +46,30 @@ def test_retrieve_comments(client):
     data = json.loads(response.content)
     assert data['content'] == comment.content
     assert data['author']['username'] == comment.author.username
+
+
+@pytest.mark.django_db
+def test_reply(client):
+
+    parent = mixer.blend(Comment)
+    user = mixer.blend(User)
+
+    client.login(username=user.username, password='test')
+
+    data = {'content': 'testing'}
+
+    response = client.post(
+        f'/api/comments/{parent.id}/reply/',
+        data,
+        format='json',
+    )
+    assert response.status_code == 201
+
+    comment = Comment.objects.filter(parent=parent).first()
+
+    assert comment.author == user
+    assert comment.post == parent.post
+    assert comment.content == 'testing'
 
 
 @pytest.mark.django_db
