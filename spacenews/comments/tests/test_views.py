@@ -25,7 +25,7 @@ def client():
 
 
 @pytest.mark.django_db
-def test_list_posts(client):
+def test_list_comments(client):
 
     mixer.cycle(3).blend(Comment)
 
@@ -37,7 +37,7 @@ def test_list_posts(client):
 
 
 @pytest.mark.django_db
-def test_retrieve_post(client):
+def test_retrieve_comments(client):
 
     comment = mixer.blend(Comment)
     response = client.get(f'/api/comments/{comment.id}/')
@@ -49,7 +49,7 @@ def test_retrieve_post(client):
 
 
 @pytest.mark.django_db
-def test_update_post(client):
+def test_update_comment(client):
 
     comment = mixer.blend(Comment)
 
@@ -67,7 +67,7 @@ def test_update_post(client):
 
 
 @pytest.mark.django_db
-def test_delete_post(client):
+def test_delete_comment(client):
 
     comment = mixer.blend(Comment)
 

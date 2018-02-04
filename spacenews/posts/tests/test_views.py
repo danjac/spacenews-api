@@ -37,6 +37,26 @@ def test_list_posts(client):
 
 
 @pytest.mark.django_db
+def test_create_post(client):
+
+    user = mixer.blend(User)
+    client.login(username=user, password='test')
+
+    data = {
+        'title': 'testing...',
+        'url': 'https://space.com',
+    }
+
+    response = client.post('/api/posts/', data, format='json')
+    assert response.status_code == 201
+
+    post = Post.objects.first()
+    assert post.title == 'testing...'
+    assert post.url == 'https://space.com'
+    assert post.author == user
+
+
+@pytest.mark.django_db
 def test_retrieve_post(client):
 
     post = mixer.blend(Post)
@@ -55,7 +75,7 @@ def test_update_post(client):
 
     data = {
         'title': 'testing...',
-        'url': 'https://reddit.com',
+        'url': 'https://space.com',
     }
 
     client.login(username=post.author.username, password='test')
@@ -66,7 +86,7 @@ def test_update_post(client):
     post.refresh_from_db()
 
     assert post.title == 'testing...'
-    assert post.url == 'https://reddit.com'
+    assert post.url == 'https://space.com'
 
 
 @pytest.mark.django_db

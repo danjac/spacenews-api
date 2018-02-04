@@ -10,3 +10,6 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.select_related('author')
     serializer_class = PostSerializer
     permission_classes = (PostPermission, )
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
