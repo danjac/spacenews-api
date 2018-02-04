@@ -22,6 +22,8 @@ class Base(Configuration):
         'django.contrib.messages',
         'django.contrib.staticfiles',
         'accounts',
+        'posts',
+        'comments',
     ]
 
     MIDDLEWARE = [
