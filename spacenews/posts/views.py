@@ -26,10 +26,6 @@ class PostViewSet(viewsets.ModelViewSet):
             select_related('author').
             order_by('-created')
         )
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = CommentSerializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
         serializer = CommentSerializer(queryset, many=True)
         return Response(serializer.data)
 
