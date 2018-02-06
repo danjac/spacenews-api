@@ -20,6 +20,7 @@ dj-database-url = "*"
 "psycopg2" = "*"
 djangorestframework = "*"
 djoser = "*"
+django-cors-headers = "*"
 
 
 [requires]

@@ -23,6 +23,7 @@ class Base(Configuration):
         'django.contrib.staticfiles',
         'rest_framework',
         'rest_framework.authtoken',
+        'corsheaders',
         'djoser',
         'accounts',
         'posts',
@@ -32,6 +33,7 @@ class Base(Configuration):
     MIDDLEWARE = [
         'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
+        'corsheaders.middleware.CorsMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -112,6 +114,7 @@ class Base(Configuration):
 
 class Development(Base):
     DEBUG = values.BooleanValue(True)
+    CORS_ORIGIN_ALLOW_ALL = True
 
 
 class Production(Base):
